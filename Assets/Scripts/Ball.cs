@@ -48,14 +48,14 @@ public class Ball : MonoBehaviour
     public void ReduceHeatBar()
     {
         bar.fillAmount -= Time.deltaTime * reduceAmount;
-       // bar.color = Color.Lerp(bar.color, lowBar, lerpTime*Time.deltaTime);
+      
 
     }
 
     public void IncreaseHeatBar()
     {
         bar.fillAmount += Time.deltaTime * reduceAmount;
-       // bar.color = Color.Lerp(bar.color, fullBar, lerpTime*Time.deltaTime);
+       
     }
 
 
