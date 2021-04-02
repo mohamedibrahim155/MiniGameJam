@@ -8,9 +8,10 @@ public class Ball : MonoBehaviour
     Rigidbody rb;
     public float ballSpeed;
     public Image bar;
-    public float reduceAmount, lerpTime;
-    public bool IsHotSpot;
+    public float reduceAmount, lerpTime, timer;
+    public bool IsHotSpot,IsOverHeated;
     public Color[] colors;
+    public GameObject holer;
 
     void Start()
     {
@@ -37,11 +38,64 @@ public class Ball : MonoBehaviour
         }
 
         if(bar.fillAmount >=1)
-        Debug.Log("OVERHEATED");
+        {
+            IsOverHeated = true;
+            Debug.Log("OVERHEATED");
+           
+        }
+        if (bar.fillAmount <= 0.75f)
+        {
+            IsOverHeated = false;
 
-     
+        }
 
 
+
+
+
+
+
+
+
+
+
+
+
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Hotspot"))
+        {
+            IsHotSpot = true;
+        }
+
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Hotspot"))
+        {
+            IsHotSpot = false;
+
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(IsOverHeated)
+        {
+            if (collision.gameObject.CompareTag("Wall"))
+            {
+                GameObject temp = Instantiate(holer, this.transform.position, holer.transform.rotation);
+                collision.gameObject.GetComponent<BoxCollider>().enabled = false;
+
+
+            }
+
+        }
+        
+       
+       
     }
 
 
@@ -58,25 +112,13 @@ public class Ball : MonoBehaviour
        
     }
 
+   
 
 
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.CompareTag("Hotspot"))
-        {
-            IsHotSpot = true;
-        }
-       
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if(other.gameObject.CompareTag("Hotspot"))
-        {
-            IsHotSpot = false;
 
-        }
-    }
+
+    
 
 }
